@@ -1,5 +1,10 @@
 {
   "ConnectionStrings": {
     "DefaultConnection": "Host=localhost;Port=5432;Database=assettracking;Username=assettracking;Password=assettracking_dev"
+  },
+  "Jwt": {
+    "Key": "AssetTracking_SuperSecret_Key_Change_In_Production_2026!",
+    "Issuer": "AssetTracking.API",
+    "Audience": "AssetTracking.Client"
   }
 }

@@ -1,6 +1,8 @@
+using AssetTracking.Domain.Entities;
 using AssetTracking.Domain.Interfaces;
 using AssetTracking.Infrastructure.Persistence;
 using AssetTracking.Infrastructure.Repositories;
+using AssetTracking.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +23,56 @@ public static class DependencyInjection
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IAuditService, AuditService>();
 
         return services;
+    }
+
+    public static async Task SeedDataAsync(IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+
+        await context.Database.EnsureCreatedAsync();
+
+        if (await context.Roles.AnyAsync()) return;
+
+        var adminRole = new Role
+        {
+            Name = "Administrador",
+            Description = "Acceso completo al sistema"
+        };
+
+        var permissions = new[]
+        {
+            new Permission { Code = "users.read", Name = "Ver usuarios", Module = "Seguridad" },
+            new Permission { Code = "users.write", Name = "Gestionar usuarios", Module = "Seguridad" }
+        };
+
+        context.Permissions.AddRange(permissions);
+        context.Roles.Add(adminRole);
+        await context.SaveChangesAsync();
+
+        foreach (var permission in permissions)
+        {
+            context.RolePermissions.Add(new RolePermission
+            {
+                RoleId = adminRole.Id,
+                PermissionId = permission.Id
+            });
+        }
+
+        context.Users.Add(new User
+        {
+            Email = "admin@institucion.edu",
+            FullName = "Administrador del Sistema",
+            RoleId = adminRole.Id,
+            PasswordHash = passwordHasher.Hash("Admin123!")
+        });
+
+        await context.SaveChangesAsync();
     }
 }

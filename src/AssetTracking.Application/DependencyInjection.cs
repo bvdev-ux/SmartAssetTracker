@@ -1,3 +1,4 @@
+using AssetTracking.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AssetTracking.Application;
@@ -8,6 +9,8 @@ public static class DependencyInjection
     {
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
