@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using AssetTracking.Application;
 using AssetTracking.API.Extensions;
+using AssetTracking.API.Middleware;
 using AssetTracking.Infrastructure;
 using Microsoft.OpenApi.Models;
 
@@ -60,14 +61,19 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+await AssetTracking.Infrastructure.DependencyInjection.SeedDataAsync(app.Services);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("Frontend");
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
