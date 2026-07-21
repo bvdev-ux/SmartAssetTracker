@@ -20,6 +20,7 @@ public static class DependencyInjection
         services.AddScoped<IMovementService, MovementService>();
         services.AddScoped<IAccessControlService, AccessControlService>();
         services.AddScoped<IAlertService, AlertService>();
+        services.AddScoped<IDashboardService, DashboardService>();
 
         return services;
     }
