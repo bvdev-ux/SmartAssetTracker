@@ -102,6 +102,16 @@ frontend/src/
 └── utils/         # Utilidades
 ```
 
+## Pruebas y CI
+
+El backend cuenta con un proyecto de pruebas unitarias (`tests/AssetTracking.Tests`, xUnit) y un workflow de
+GitHub Actions (`.github/workflows/dotnet.yml`) que ejecuta `restore`, `build` y `test` en cada `push` y
+`pull request` hacia `main`. Ver [docs/CI.md](docs/CI.md) para más detalle.
+
+```bash
+dotnet test src/AssetTracking.sln
+```
+
 ## Extensibilidad futura
 
 La arquitectura está preparada para integrar:
