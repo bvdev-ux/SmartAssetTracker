@@ -27,6 +27,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPersonRepository, PersonRepository>();
         services.AddScoped<IAssetRepository, AssetRepository>();
+        services.AddScoped<ILocationRepository, LocationRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuditService, AuditService>();
@@ -85,6 +86,20 @@ public static class DependencyInjection
             new AssetCategory { Name = "Monitor", Description = "Monitores y pantallas" },
             new AssetCategory { Name = "Impresora", Description = "Impresoras" },
             new AssetCategory { Name = "Otros", Description = "Otros activos tecnológicos" });
+
+        var mainCampus = new Location
+        {
+            Name = "Campus Principal",
+            Code = "CAMPUS-01",
+            LocationType = Domain.Enums.LocationType.Campus
+        };
+        context.Locations.Add(mainCampus);
+        await context.SaveChangesAsync();
+
+        context.Locations.AddRange(
+            new Location { Name = "Puerta Norte", Code = "PUERTA-N", LocationType = Domain.Enums.LocationType.Gate, ParentLocationId = mainCampus.Id },
+            new Location { Name = "Puerta Sur", Code = "PUERTA-S", LocationType = Domain.Enums.LocationType.Gate, ParentLocationId = mainCampus.Id },
+            new Location { Name = "Biblioteca Central", Code = "BIBLIO-01", LocationType = Domain.Enums.LocationType.Library, ParentLocationId = mainCampus.Id });
 
         await context.SaveChangesAsync();
     }
