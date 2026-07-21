@@ -1,3 +1,4 @@
+using AssetTracking.Application.Interfaces;
 using AssetTracking.Domain.Entities;
 using AssetTracking.Domain.Interfaces;
 using AssetTracking.Infrastructure.Persistence;
@@ -23,6 +24,7 @@ public static class DependencyInjection
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuditService, AuditService>();
