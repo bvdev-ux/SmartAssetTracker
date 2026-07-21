@@ -17,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<IAssetBrandService, AssetBrandService>();
         services.AddScoped<IAssetModelService, AssetModelService>();
         services.AddScoped<ILocationService, LocationService>();
+        services.AddScoped<IMovementService, MovementService>();
 
         return services;
     }
