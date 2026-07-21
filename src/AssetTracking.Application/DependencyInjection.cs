@@ -21,6 +21,7 @@ public static class DependencyInjection
         services.AddScoped<IAccessControlService, AccessControlService>();
         services.AddScoped<IAlertService, AlertService>();
         services.AddScoped<IDashboardService, DashboardService>();
+        services.AddScoped<IReportService, ReportService>();
 
         return services;
     }
