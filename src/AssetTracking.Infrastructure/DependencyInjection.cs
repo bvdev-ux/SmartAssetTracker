@@ -77,6 +77,15 @@ public static class DependencyInjection
             PasswordHash = passwordHasher.Hash("Admin123!")
         });
 
+        context.AssetCategories.AddRange(
+            new AssetCategory { Name = "Laptop", Description = "Computadoras portátiles" },
+            new AssetCategory { Name = "Tablet", Description = "Tabletas" },
+            new AssetCategory { Name = "Cámara", Description = "Cámaras fotográficas y de video" },
+            new AssetCategory { Name = "Proyector", Description = "Proyectores multimedia" },
+            new AssetCategory { Name = "Monitor", Description = "Monitores y pantallas" },
+            new AssetCategory { Name = "Impresora", Description = "Impresoras" },
+            new AssetCategory { Name = "Otros", Description = "Otros activos tecnológicos" });
+
         await context.SaveChangesAsync();
     }
 }
