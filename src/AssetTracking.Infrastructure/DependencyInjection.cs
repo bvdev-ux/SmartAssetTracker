@@ -58,7 +58,12 @@ public static class DependencyInjection
         var permissions = new[]
         {
             new Permission { Code = "users.read", Name = "Ver usuarios", Module = "Seguridad" },
-            new Permission { Code = "users.write", Name = "Gestionar usuarios", Module = "Seguridad" }
+            new Permission { Code = "users.write", Name = "Gestionar usuarios", Module = "Seguridad" },
+            new Permission { Code = "assets.read", Name = "Ver activos", Module = "Activos" },
+            new Permission { Code = "assets.write", Name = "Gestionar activos", Module = "Activos" },
+            new Permission { Code = "movements.write", Name = "Registrar movimientos", Module = "Registro" },
+            new Permission { Code = "reports.read", Name = "Ver reportes", Module = "Reportes" },
+            new Permission { Code = "dashboard.read", Name = "Ver dashboard", Module = "Dashboard" }
         };
 
         context.Permissions.AddRange(permissions);
