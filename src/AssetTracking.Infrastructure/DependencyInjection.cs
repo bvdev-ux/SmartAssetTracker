@@ -1,6 +1,7 @@
 using AssetTracking.Domain.Interfaces;
 using AssetTracking.Infrastructure.Persistence;
 using AssetTracking.Infrastructure.Repositories;
+using AssetTracking.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,9 @@ public static class DependencyInjection
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IAuditService, AuditService>();
 
         return services;
     }
