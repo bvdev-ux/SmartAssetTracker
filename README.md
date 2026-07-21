@@ -1,5 +1,7 @@
 # Asset Tracking
 
+[![.NET CI](https://github.com/bvdev-ux/SmartAssetTracker/actions/workflows/dotnet.yml/badge.svg)](https://github.com/bvdev-ux/SmartAssetTracker/actions/workflows/dotnet.yml)
+
 Plataforma web para la **gestión y trazabilidad de activos tecnológicos** en instituciones educativas.
 
 ## Stack
